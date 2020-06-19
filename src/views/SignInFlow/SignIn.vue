@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="{'light-background':!isDarkMode,'dark-background':isDarkMode}">
         <div class="request">
             Don't have a Design+Code HQ account?
             <router-link to="/request">Request an account</router-link>
@@ -11,17 +11,40 @@
             <input type="password" placeholder="Password">
             <button>Sign In</button>
             <router-link to="/recover">Forgot you password ?</router-link>
+            <button @click="toggleDarkMode">Toggle</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "SignIn"
+        name: "SignIn",
+        data() {
+            return {
+                isDarkMode: true
+            }
+
+        }
+        ,
+        methods: {
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                document.body.style.background = this.isDarkMode ? "#212c4f" : "#D3D3D3"
+            }
+        }
     }
 </script>
 
 <style scoped lang="scss">
+    .light-background {
+        background: $light-gray;
+
+    }
+
+    .dark-background {
+        background: $dark-blue;
+    }
+
     .container {
         display: flex;
         justify-content: center;
@@ -35,8 +58,9 @@
         top: 40px;
         right: 40px;
         color: rgba(255, 255, 255, 0.3);
-        a{
-           color: white;
+
+        a {
+            color: white;
         }
     }
 
