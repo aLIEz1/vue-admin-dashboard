@@ -11,22 +11,22 @@
             <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
                 Sign in Design+Code HQ
             </h4>
-            <form @submit.prevent="onSubmit">
-            <input
-                    type="email"
-                    placeholder="Email"
-                    :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-                    v-model="email"
-                    required
-            />
-            <input
-                    type="password"
-                    placeholder="Password"
-                    :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-                    v-model="password"
-                    required
-            />
-            <button>Sign In</button>
+            <form @submit="onSubmit">
+                <input
+                        type="email"
+                        placeholder="Email"
+                        :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+                        v-model="email"
+                        required
+                />
+                <input
+                        type="password"
+                        placeholder="Password"
+                        :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+                        v-model="password"
+                        required
+                />
+                <button>Sign In</button>
             </form>
             <router-link
                     to="/recover"
@@ -42,12 +42,18 @@
 <script>
     import RequestAccount from "../../components/RequestAccount";
     import ThemeSwitch from "../../components/ThemeSwitch";
-    import { auth } from "@/main";
+    import { auth } from "../../main";
     // import * as netfliyIdentityWidget from "netlify-identity-widget";
     export default {
         components: {
             RequestAccount,
             ThemeSwitch
+        },
+        data() {
+            return {
+                email: null,
+                password: null
+            }
         },
         name: "SignIn",
         computed: {
@@ -55,14 +61,14 @@
                 return this.$store.getters.isDarkMode;
             }
         },
-        methods:{
-            onSubmit(){
-                const email=this.email;
-                const password=this.password;
-                auth.login(email,password).then(response=>{
-                    alert("Response: ",response)
-                }).catch(error=>{
-                    alert("Error: ",error)
+        methods: {
+            onSubmit() {
+                const email = this.email;
+                const password = this.password;
+                auth.login(email, password,true).then(response => {
+                    this.$router.replace("/");
+                }).catch(error => {
+                    alert("Error: ", error)
                 })
 
             }
@@ -91,8 +97,6 @@
     .login {
         width: 400px;
     }
-
-
 
 
 </style>

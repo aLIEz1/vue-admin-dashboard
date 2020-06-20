@@ -23,7 +23,7 @@ const routes = [
         name: "team",
         component: Team,
         meta:{
-            requireAuth:true
+            requiresAuth:true
         }
     },
     {
