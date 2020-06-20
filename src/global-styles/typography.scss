@@ -3,32 +3,28 @@
 $system-font-family: Avenir, Helvetica, Arial, sans-serif;
 
 //Headings
-@mixin heading-1($color:$white ) {
+@mixin heading-1 {
   font-size: 80px;
   line-height: 86px;
   font-weight: bold;
-  color: $color;
 }
 
-@mixin heading-2($color:$white ) {
+@mixin heading-2 {
   font-size: 60px;
   line-height: 86px;
   font-weight: bold;
-  color: $color;
 }
 
-@mixin heading-3($color:$white ) {
+@mixin heading-3 {
   font-size: 30px;
   line-height: 43px;
   font-weight: bold;
-  color: $color;
 }
 
-@mixin heading-4($color:$white ) {
+@mixin heading-4 {
   font-size: 24px;
   line-height: 34px;
   font-weight: bold;
-  color: $color;
 }
 
 //Body Text
