@@ -3,6 +3,15 @@
         <router-view/>
     </div>
 </template>
+<script>
+    export default {
+        name: "App",
+        mounted() {
+            const isDarkMode = this.$store.getters.isDarkMode
+            document.body.style.background = isDarkMode ? "#212c4f" : "#D3D3D3"
+        }
+    }
+</script>
 
 <style lang="scss">
 

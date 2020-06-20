@@ -1,16 +1,27 @@
 <template>
     <div class="container" :class="{'light-background':!isDarkMode,'dark-background':isDarkMode}">
-        <div class="request">
+        <div class="request"
+             :class="{'light-request':isDarkMode,
+        'dark-request':!isDarkMode}">
             Don't have a Design+Code HQ account?
             <router-link to="/request">Request an account</router-link>
         </div>
         <div class="login">
-            <img src="@/assets/DCHQ.svg"/>
-            <h4>Sign in Design+Code HQ</h4>
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
+            <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
+            <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
+            <h4 :class="{'light-text':isDarkMode,'dark-text':!isDarkMode}">Sign in Design+Code HQ</h4>
+            <input type="email" placeholder="Email"
+                   :class="{'light-field':isDarkMode,
+                   'dark-field':!isDarkMode}">
+            <input type="password" placeholder="Password"
+                   :class="{'light-field':isDarkMode,
+                   'dark-field':!isDarkMode}">
             <button>Sign In</button>
-            <router-link to="/recover">Forgot you password ?</router-link>
+            <router-link to="/recover"
+                         :class="{'light-link':isDarkMode,
+            'dark-link':!isDarkMode}">
+                Forgot you password ?
+            </router-link>
             <button @click="toggleDarkMode">Toggle</button>
         </div>
     </div>
@@ -19,17 +30,16 @@
 <script>
     export default {
         name: "SignIn",
-        data() {
-            return {
-                isDarkMode: true
+        computed: {
+            isDarkMode() {
+                return  this.$store.getters.isDarkMode
             }
 
         }
         ,
         methods: {
             toggleDarkMode() {
-                this.isDarkMode = !this.isDarkMode;
-                document.body.style.background = this.isDarkMode ? "#212c4f" : "#D3D3D3"
+                this.$store.commit("toggleDarkMode")
             }
         }
     }
@@ -45,6 +55,32 @@
         background: $dark-blue;
     }
 
+    .light-text {
+        color: $white;
+    }
+
+    .dark-text {
+        color: $black;
+    }
+
+    .light-field {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        &::placeholder {
+            color: rgba(198, 208, 235, 0.3);
+        }
+    }
+
+    .dark-field {
+        background: rgba(198, 208, 235, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.3);
+        }
+    }
+
     .container {
         display: flex;
         justify-content: center;
@@ -57,11 +93,31 @@
         position: absolute;
         top: 40px;
         right: 40px;
+    }
+
+    .light-request {
         color: rgba(255, 255, 255, 0.3);
 
         a {
-            color: white;
+            color: $white;
         }
+    }
+
+    .dark-request {
+        color: rgba(0, 0, 0, 0.3);
+
+        a {
+            color: $black;
+        }
+
+    }
+
+    .light-recover {
+
+    }
+
+    .dark-recover {
+
     }
 
     .login {
@@ -95,7 +151,7 @@
 
     button {
         background: #56CCF2;
-        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2);
         border-radius: 4px;
         border: none;
         height: 60px;
@@ -109,7 +165,14 @@
     a {
         font-size: 16px;
         text-align: center;
-        color: rgba(255, 255, 255, 0.3);
         text-decoration: none;
+    }
+
+    .light-link {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .dark-link {
+        color: rgba(0, 0, 0, 0.3);
     }
 </style>
