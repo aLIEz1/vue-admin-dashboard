@@ -1,13 +1,9 @@
-<template>
-    
-</template>
+<template> </template>
 
 <script>
-    export default {
-        name: "Recover"
-    }
+export default {
+  name: "Recover"
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
