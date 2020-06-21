@@ -3,7 +3,7 @@
             class="container"
             :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
     >
-
+        <Notification v-show="hasText" :text="text"/>
         <RequestAccount/>
         <div class="login">
             <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
@@ -11,7 +11,7 @@
             <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
                 Sign in Design+Code HQ
             </h4>
-            <form @submit="onSubmit">
+            <form @submit.prevent="onSubmit">
                 <input
                         type="email"
                         placeholder="Email"
@@ -42,17 +42,21 @@
 <script>
     import RequestAccount from "../../components/RequestAccount";
     import ThemeSwitch from "../../components/ThemeSwitch";
-    import { auth } from "../../main";
+    import {auth} from "../../main";
+    import Notification from "../../components/Notification";
     // import * as netfliyIdentityWidget from "netlify-identity-widget";
     export default {
         components: {
             RequestAccount,
-            ThemeSwitch
+            ThemeSwitch,
+            Notification
         },
         data() {
             return {
                 email: null,
-                password: null
+                password: null,
+                hasText: false,
+                text: '',
             }
         },
         name: "SignIn",
@@ -65,13 +69,31 @@
             onSubmit() {
                 const email = this.email;
                 const password = this.password;
-                auth.login(email, password,true).then(response => {
-                    this.$router.replace("/");
+                // auth.login(email, password).then(response => {
+                //     console.log("login success",JSON.stringify(response))
+                // }).catch(error => {
+                //     console.log(error)
+                // })
+                auth.login(email, password, true).then(response => {
+                    console.log("login success  ", JSON.stringify(response))
+                    setTimeout(()=>{
+                        this.$router.replace("/");
+                    },3000)
+
                 }).catch(error => {
                     alert("Error: ", error)
                 })
 
+
             }
+        },
+        mounted() {
+            const params = this.$route.params;
+            if (params.userLoggedOut) {
+                this.hasText = true;
+                this.text = "You have logged out!";
+            }
+            // alert(params.userLoggedOut1)
         }
 
     };

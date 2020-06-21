@@ -4,18 +4,22 @@
     </div>
 </template>
 <script>
-    // import "animate.css";
+
+    function importCDN(url) {
+        const link = document.createElement('link')
+        link.type = 'text/css'
+        link.rel = 'stylesheet'
+        link.href = url
+        document.head.appendChild(link)
+    }
 
     export default {
         name: "App",
         mounted() {
             const isDarkMode = this.$store.getters.isDarkMode;
             document.body.style.background = isDarkMode ? "#212c4f" : "#D3D3D3";
-            const link = document.createElement('link')
-            link.type = 'text/css'
-            link.rel = 'stylesheet'
-            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.compat.css'
-            document.head.appendChild(link)
+            importCDN("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.compat.css");
+            importCDN("https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.css");
         }
     };
 </script>
@@ -42,19 +46,6 @@
         -moz-osx-font-smoothing: grayscale;
         /*text-align: center;*/
         color: $white;
-    }
-
-    #nav {
-        padding: 30px;
-
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-
-            &.router-link-exact-active {
-                color: #42b983;
-            }
-        }
     }
 
     /*

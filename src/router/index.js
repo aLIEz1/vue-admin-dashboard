@@ -14,16 +14,16 @@ const routes = [
         path: "/",
         name: "Home",
         component: Home,
-        meta:{
-            requiresAuth:true
+        meta: {
+            // requiresAuth: true
         }
     },
     {
         path: "/team",
         name: "team",
         component: Team,
-        meta:{
-            requiresAuth:true
+        meta: {
+            // requiresAuth: true
         }
     },
     {
@@ -49,16 +49,24 @@ const router = new VueRouter({
     routes
 });
 router.beforeEach(
-    (to,from,next) => {
-        const currentUser=netfliyIdentityWidget.currentUser();
-        const requiresAuth=to.matched.some(record=>{
-            return record.meta.requiresAuth
+    (to, from, next) => {
+        const currentUser = netfliyIdentityWidget.currentUser();
+        console.log(currentUser)
+        // const requiresAuth=to.matched.some(record=>{
+        //     console.log(record)
+        //     return record.meta.requiresAuth
+        // })
+        const requiresAuth = to.matched.some(record=>{
+            console.log(record)
+            return record.meta.requiresAuth;
         })
-        if (requiresAuth && !currentUser){
+        console.log(requiresAuth)
+        console.log(currentUser)
+        if (!currentUser && requiresAuth) {
             next("signin");
-        }else {
-            next();
+        } else {
+            next()
         }
-})
+    })
 
 export default router;

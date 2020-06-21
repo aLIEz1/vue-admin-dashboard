@@ -39,7 +39,10 @@ $system-font-family: Avenir, Helvetica, Arial, sans-serif;
   @extend %Large;
   color: $color;
 }
-
+@mixin medium-text{
+  line-height: 25px;
+  font-size: 20px;
+}
 @mixin large-text-bold($color:$white ) {
   @extend %Large;
   font-weight: bold;
