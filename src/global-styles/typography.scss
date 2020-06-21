@@ -15,7 +15,7 @@ $system-font-family: Avenir, Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 
-@mixin heading-3 {
+@mixin heading-3{
   font-size: 30px;
   line-height: 43px;
   font-weight: bold;
@@ -39,10 +39,12 @@ $system-font-family: Avenir, Helvetica, Arial, sans-serif;
   @extend %Large;
   color: $color;
 }
-@mixin medium-text{
+
+@mixin medium-text {
   line-height: 25px;
   font-size: 20px;
 }
+
 @mixin large-text-bold($color:$white ) {
   @extend %Large;
   font-weight: bold;

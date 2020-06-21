@@ -20,6 +20,7 @@
             document.body.style.background = isDarkMode ? "#212c4f" : "#D3D3D3";
             importCDN("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.compat.css");
             importCDN("https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.css");
+            // importCDN("https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.19.2/apexcharts.js")
         }
     };
 </script>
@@ -29,7 +30,12 @@
     }
 
     body {
+        margin: 0;
         background: $dark-blue;
+    }
+    line,text{
+        stroke: $light-blue;
+        opacity: 0.2;
     }
 
     h1 {
@@ -114,6 +120,7 @@
     .light-field {
         background: rgba(255, 255, 255, 0.2);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        color: $white;
 
         &::placeholder {
             color: rgba(198, 208, 235, 0.3);
@@ -123,6 +130,7 @@
     .dark-field {
         background: rgba(198, 208, 235, 0.2);
         border: 1px solid rgba(0, 0, 0, 0.2);
+        color: $black;
 
         &::placeholder {
             color: rgba(0, 0, 0, 0.3);
