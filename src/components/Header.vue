@@ -1,7 +1,8 @@
 <template>
     <div id="nav" :class="{'nav-light':!isDarkMode,'dark-nav':isDarkMode}">
         <div class="nav-1">
-            <img src="@/assets/DCHQ-small-light.svg"/>
+            <img v-show="!isDarkMode" src="@/assets/DCHQ-small-light.svg"/>
+            <img v-show="isDarkMode" src="@/assets/DCHQ-small-dark.svg"/>
             <router-link to="/" :class="{'light-nav':!isDarkMode
             ,'dark-nav':isDarkMode}">Home
             </router-link>
@@ -12,7 +13,10 @@
             ,'dark-nav':isDarkMode}">Team
             </router-link>
         </div>
-        <a @click="onClick">Logout</a>
+        <a @click="onClick" class="logout">
+            Logout
+            <img src="@/assets/log-in.svg"/>
+        </a>
     </div>
 </template>
 
@@ -94,5 +98,10 @@
         img {
             margin-right: 20px;
         }
+    }
+    .logout{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
