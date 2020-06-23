@@ -88,12 +88,8 @@
             }
         },
         mounted() {
-            const params = this.$route.params;
-            if (params.userLoggedOut) {
                 this.hasText = true;
-                this.text = "You have logged out!";
-            }
-            // alert(params.userLoggedOut1)
+                this.text = "Welcome!";
         }
 
     };

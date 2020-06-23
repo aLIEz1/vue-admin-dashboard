@@ -32,19 +32,11 @@
         },
         methods: {
             onClick() {
-                const user = auth.currentUser();
-                user.logout().then(response => {
-                    this.$router.push(
-                        {
-                            name: "signin",
-                            params: {
-                                userLoggedOut1: true
-                            }
-                        }
-                    )
-                }).catch(error => {
-                    alert("Error: ", error)
-                })
+                this.$router.replace(
+                    {
+                        name: "signin",
+                    }
+                )
             }
         }
 
@@ -99,7 +91,8 @@
             margin-right: 20px;
         }
     }
-    .logout{
+
+    .logout {
         display: flex;
         justify-content: center;
         align-items: center;
