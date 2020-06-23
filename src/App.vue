@@ -1,10 +1,9 @@
 <template>
-    <div id="app">
+    <div id="app" :class="{'light-background':!isDarkMode,'dark-background':isDarkMode}">
         <router-view/>
     </div>
 </template>
 <script>
-
     function importCDN(url) {
         const link = document.createElement('link')
         link.type = 'text/css'
@@ -15,12 +14,16 @@
 
     export default {
         name: "App",
+        computed: {
+            isDarkMode() {
+                return this.$store.getters.isDarkMode;
+            }
+        },
         mounted() {
             const isDarkMode = this.$store.getters.isDarkMode;
             document.body.style.background = isDarkMode ? "#212c4f" : "#D3D3D3";
             importCDN("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.compat.css");
             importCDN("https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.css");
-            // importCDN("https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.19.2/apexcharts.js")
         }
     };
 </script>
@@ -33,8 +36,8 @@
         margin: 0;
         background: $dark-blue;
     }
-    line,text{
-        stroke: $light-blue;
+
+    line, text {
         opacity: 0.2;
     }
 
@@ -103,10 +106,18 @@
 
     .light-background {
         background: $light-gray;
+
+        line, text {
+            stroke: $black;
+        }
     }
 
     .dark-background {
         background: $dark-blue;
+
+        line, text {
+            stroke: $light-blue;
+        }
     }
 
     .light-text {
@@ -143,6 +154,16 @@
 
     .dark-link {
         color: rgba(0, 0, 0, 0.3);
+    }
+
+    .light-box {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-box {
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
 </style>
