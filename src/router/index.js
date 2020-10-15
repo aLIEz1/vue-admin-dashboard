@@ -5,7 +5,7 @@ import SignIn from "../views/SignInFlow/SignIn";
 import Request from "../views/SignInFlow/Request";
 import Recover from "../views/SignInFlow/Recover";
 import Team from "../views/Team";
-import * as netfliyIdentityWidget from "netlify-identity-widget";
+import store from '../store/index'
 
 Vue.use(VueRouter);
 
@@ -15,7 +15,7 @@ const routes = [
         name: "Home",
         component: Home,
         meta: {
-            // requiresAuth: true
+            requiresAuth: true
         }
     },
     {
@@ -23,7 +23,7 @@ const routes = [
         name: "team",
         component: Team,
         meta: {
-            // requiresAuth: true
+            requiresAuth: true
         }
     },
     {
@@ -50,19 +50,11 @@ const router = new VueRouter({
 });
 router.beforeEach(
     (to, from, next) => {
-        const currentUser = netfliyIdentityWidget.currentUser();
-        console.log(currentUser)
-        // const requiresAuth=to.matched.some(record=>{
-        //     console.log(record)
-        //     return record.meta.requiresAuth
-        // })
+        const loggedIn = store.state.auth.status.loggedIn;
         const requiresAuth = to.matched.some(record=>{
-            console.log(record)
             return record.meta.requiresAuth;
         })
-        console.log(requiresAuth)
-        console.log(currentUser)
-        if (!currentUser && requiresAuth) {
+        if (!loggedIn && requiresAuth) {
             next("signin");
         } else {
             next()

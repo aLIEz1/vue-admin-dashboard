@@ -9,21 +9,21 @@
             <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
             <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
             <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
-                Sign in Design+Code HQ
+                Sign in
             </h4>
             <form @submit.prevent="onSubmit">
                 <input
-                        type="email"
-                        placeholder="Email"
+                        type="text"
+                        placeholder="Username"
                         :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-                        v-model="email"
+                        v-model="user.username"
                         required
                 />
                 <input
                         type="password"
                         placeholder="Password"
                         :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-                        v-model="password"
+                        v-model="user.password"
                         required
                 />
                 <button>Sign In</button>
@@ -42,9 +42,8 @@
 <script>
     import RequestAccount from "../../components/RequestAccount";
     import ThemeSwitch from "../../components/ThemeSwitch";
-    import {auth} from "../../main";
     import Notification from "../../components/Notification";
-    // import * as netfliyIdentityWidget from "netlify-identity-widget";
+    import User from "@/models/user";
     export default {
         components: {
             RequestAccount,
@@ -53,8 +52,7 @@
         },
         data() {
             return {
-                email: null,
-                password: null,
+              user : new User('',''),
                 hasText: false,
                 text: '',
             }
@@ -63,28 +61,26 @@
         computed: {
             isDarkMode() {
                 return this.$store.getters.isDarkMode;
-            }
+            },
+          loggedIn(){
+              return this.$store.state.auth.status.loggedIn;
+          }
         },
-        methods: {
+      created() {
+          if (this.loggedIn){
+            this.$router.push('/')
+          }
+      },
+      methods: {
             onSubmit() {
-                const email = this.email;
-                const password = this.password;
-                // auth.login(email, password).then(response => {
-                //     console.log("login success",JSON.stringify(response))
-                // }).catch(error => {
-                //     console.log(error)
-                // })
-                auth.login(email, password, true).then(response => {
-                    console.log("login success  ", JSON.stringify(response))
-                    setTimeout(()=>{
-                        this.$router.replace("/");
-                    },3000)
-
-                }).catch(error => {
-                    alert("Error: ", error)
-                })
-
-
+              if (this.user.username&&this.user.password){
+                this.$store.dispatch('auth/login',this.user).then(
+                    data=>{
+                      this.$router.push('/')
+                      console.log(data)
+                    }
+                )
+              }
             }
         },
         mounted() {

@@ -32,11 +32,8 @@
         },
         methods: {
             onClick() {
-                this.$router.replace(
-                    {
-                        name: "signin",
-                    }
-                )
+              this.$store.dispatch('auth/logout');
+              this.$router.push('/signin');
             }
         }
 

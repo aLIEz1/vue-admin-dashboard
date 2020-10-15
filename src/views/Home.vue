@@ -1,9 +1,6 @@
 <template>
     <div class="home">
         <Header/>
-        <div class="btn">
-            <ThemeSwitch/>
-        </div>
         <div class="container">
             <Toggle/>
             <Chart/>
