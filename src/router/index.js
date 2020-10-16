@@ -6,6 +6,7 @@ import Request from "../views/SignInFlow/Request";
 import Recover from "../views/SignInFlow/Recover";
 import Team from "../views/Team";
 import store from '../store/index'
+import Manage from "@/views/Manage";
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,14 @@ const routes = [
         path: "/team",
         name: "team",
         component: Team,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/manage",
+        name: "manage",
+        component: Manage,
         meta: {
             requiresAuth: true
         }
