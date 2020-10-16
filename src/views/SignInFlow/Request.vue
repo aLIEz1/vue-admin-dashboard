@@ -7,7 +7,7 @@
       <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
       <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
       <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
-        Sign up an account
+        Request Account
       </h4>
       <div v-if="!successful">
         <form @submit.prevent="onSubmit">
@@ -34,6 +34,12 @@
           />
           <button>Sign up</button>
         </form>
+        <router-link
+            to="/signin"
+            :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
+        >
+          Already have an account? Sign in now.
+        </router-link>
       </div>
       <div
           v-if="message"
@@ -78,8 +84,12 @@ export default {
           data => {
             this.message = data.message;
             this.successful = true;
-            this.$router.push('/')
-            console.log(data)
+            this.$router.push({
+              name: "signin",
+              params:{
+                userRegisterAccount: true,
+              }
+            })
           },
           error => {
             this.message =

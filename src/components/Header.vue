@@ -33,7 +33,12 @@
         methods: {
             onClick() {
               this.$store.dispatch('auth/logout');
-              this.$router.push('/signin');
+              this.$router.push({
+                name: "signin",
+                params:{
+                  userLogoutAccount: true
+                }
+              });
             }
         }
 
