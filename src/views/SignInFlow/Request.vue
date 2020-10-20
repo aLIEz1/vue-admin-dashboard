@@ -1,51 +1,52 @@
 <template>
   <div
-      class="container"
-      :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
+    class="container"
+    :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
   >
     <div class="login">
-      <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
-      <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
+      <img src="@/assets/DCHQ.svg" v-show="isDarkMode" />
+      <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode" />
       <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
         Request Account
       </h4>
       <div v-if="!successful">
         <form @submit.prevent="onSubmit">
           <input
-              type="text"
-              placeholder="Username"
-              :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-              v-model="user.username"
-              required
+            type="text"
+            placeholder="Username"
+            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+            v-model="user.username"
+            required
           />
           <input
-              type="email"
-              placeholder="Email"
-              :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-              v-model="user.email"
-              required
+            type="email"
+            placeholder="Email"
+            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+            v-model="user.email"
+            required
           />
           <input
-              type="password"
-              placeholder="Password"
-              :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-              v-model="user.password"
-              required
+            type="password"
+            placeholder="Password"
+            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+            v-model="user.password"
+            required
           />
           <button>Sign up</button>
         </form>
         <router-link
-            to="/signin"
-            :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
+          to="/signin"
+          :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
         >
           Already have an account? Sign in now.
         </router-link>
       </div>
       <div
-          v-if="message"
-          class="alert"
-          :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}
+        v-if="message"
+        class="alert"
+        :class="successful ? 'alert-success' : 'alert-danger'"
+      >
+        {{ message }}
       </div>
     </div>
   </div>
@@ -59,10 +60,10 @@ export default {
   components: {},
   data() {
     return {
-      user: new User('', ''),
+      user: new User("", ""),
       successful: false,
-      message: ''
-    }
+      message: ""
+    };
   },
   computed: {
     isDarkMode() {
@@ -74,30 +75,32 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push('/');
+      this.$router.push("/");
     }
   },
   methods: {
     onSubmit() {
-      this.message = '';
-      this.$store.dispatch('auth/register', this.user).then(
-          data => {
-            this.message = data.message;
-            this.successful = true;
-            this.$router.push({
-              name: "signin",
-              params:{
-                userRegisterAccount: true,
-              }
-            })
-          },
-          error => {
-            this.message =
-                (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
-            this.successful = false;
-          }
+      this.message = "";
+      this.$store.dispatch("auth/register", this.user).then(
+        data => {
+          this.message = data.message;
+          this.successful = true;
+          this.$router.push({
+            name: "signin",
+            params: {
+              userRegisterAccount: true
+            }
+          });
+        },
+        error => {
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          this.successful = false;
+        }
       );
     }
   }
@@ -114,7 +117,6 @@ export default {
   min-height: 100vh;
 }
 
-
 .light-recover {
 }
 
@@ -124,6 +126,4 @@ export default {
 .login {
   width: 400px;
 }
-
-
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <Header/>
+    <Header />
     <div class="container">
-      <Notification v-show="hasText" :text="text"/>
-      <Toggle/>
-      <Chart/>
+      <Notification v-show="hasText" :text="text" />
+      <Toggle />
+      <Chart />
     </div>
   </div>
 </template>
@@ -26,8 +26,8 @@ export default {
   data() {
     return {
       hasText: false,
-      text: '',
-    }
+      text: ""
+    };
   },
   mounted() {
     const params = this.$route.params;

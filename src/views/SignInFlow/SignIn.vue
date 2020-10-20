@@ -1,40 +1,40 @@
 <template>
   <div
-      class="container"
-      :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
+    class="container"
+    :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
   >
-    <Notification v-show="hasText" :text="text"/>
-    <RequestAccount/>
+    <Notification v-show="hasText" :text="text" />
+    <RequestAccount />
     <div class="login">
-      <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
-      <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
+      <img src="@/assets/DCHQ.svg" v-show="isDarkMode" />
+      <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode" />
       <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
         Sign in
       </h4>
       <form @submit.prevent="onSubmit">
         <input
-            type="text"
-            placeholder="Username"
-            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-            v-model="user.username"
-            required
+          type="text"
+          placeholder="Username"
+          :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+          v-model="user.username"
+          required
         />
         <input
-            type="password"
-            placeholder="Password"
-            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-            v-model="user.password"
-            required
+          type="password"
+          placeholder="Password"
+          :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+          v-model="user.password"
+          required
         />
         <button>Sign In</button>
       </form>
       <router-link
-          to="/recover"
-          :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
+        to="/recover"
+        :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
       >
         Forgot you password ?
       </router-link>
-      <ThemeSwitch/>
+      <ThemeSwitch />
     </div>
   </div>
 </template>
@@ -53,10 +53,10 @@ export default {
   },
   data() {
     return {
-      user: new User('', ''),
+      user: new User("", ""),
       hasText: false,
-      text: '',
-    }
+      text: ""
+    };
   },
   name: "SignIn",
   computed: {
@@ -69,23 +69,21 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push('/')
+      this.$router.push("/");
     }
   },
   methods: {
     onSubmit() {
       if (this.user.username && this.user.password) {
-        this.$store.dispatch('auth/login', this.user).then(
-            data => {
-              this.$router.push({
-                name: "Home",
-                params: {
-                  userLoginAccount: true,
-                  username: this.user.username
-                }
-              })
+        this.$store.dispatch("auth/login", this.user).then(() => {
+          this.$router.push({
+            name: "Home",
+            params: {
+              userLoginAccount: true,
+              username: this.user.username
             }
-        )
+          });
+        });
       }
     }
   },
@@ -94,14 +92,20 @@ export default {
     if (params.userLogoutAccount) {
       this.hasText = true;
       this.text = "You have logged out!";
-    }else if (params.userRegisterAccount){
+    } else if (params.userRegisterAccount) {
       this.hasText = true;
       this.text = "Registration successful, please login";
-    }else {
-      this.hasText=false
+    }else if (params.userResetPassword){
+      this.hasText=true;
+      this.text="an email has been send to your mailbox";
+    }else if (params.userAlreadyResetPassword){
+      this.hasText=true;
+      this.text="You have reset your password. Please login";
+    }
+      else {
+      this.hasText = false;
     }
   }
-
 };
 </script>
 
@@ -115,7 +119,6 @@ export default {
   min-height: 100vh;
 }
 
-
 .light-recover {
 }
 
@@ -125,6 +128,4 @@ export default {
 .login {
   width: 400px;
 }
-
-
 </style>

@@ -1,74 +1,79 @@
 <template>
   <div class="manage">
-    <Header/>
+    <Header />
     <div class="container">
-      <h1 :class="{'dark' : !isDarkMode, 'light' : isDarkMode}">Manage Readers</h1>
-      <p
-          :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-      >Enter reader name</p>
+      <h1 :class="{ dark: !isDarkMode, light: isDarkMode }">Manage Readers</h1>
+      <p :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
+        Enter reader name
+      </p>
       <form @submit.prevent="getUserData" class="manage-container">
         <input
-            v-model="reader.name"
-            type="text"
-            style="margin: 0"
-            class="field"
-            :class="{'light-field': isDarkMode, 'dark-field': !isDarkMode}"
-            placeholder="Reader name"
+          v-model="reader.name"
+          type="text"
+          style="margin: 0"
+          class="field"
+          :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+          placeholder="Reader name"
         />
-        <button
-            class="manage-button button"
-        >Get Reader Details
-        </button>
+        <button class="manage-button button">Get Reader Details</button>
       </form>
-      <hr class="line-break"/>
-      <h1 :class="{'dark' : !isDarkMode, 'light' : isDarkMode}">Reader Details</h1>
+      <hr class="line-break" />
+      <h1 :class="{ dark: !isDarkMode, light: isDarkMode }">Reader Details</h1>
       <div class="details-container">
         <div class="detail">
           <div
-              class="detail-title"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >Reader name
+            class="detail-title"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            Reader name
           </div>
           <div
-              class="detail-text"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >{{reader.name}}
-          </div>
-        </div>
-        <div class="detail">
-          <div
-              class="detail-title"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >Age
-          </div>
-          <div
-              class="detail-text"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >{{reader.age}}
+            class="detail-text"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            {{ reader.name }}
           </div>
         </div>
         <div class="detail">
           <div
-              class="detail-title"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >Job
+            class="detail-title"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            Age
           </div>
           <div
-              class="detail-text"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >{{reader.job}}
+            class="detail-text"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            {{ reader.age }}
           </div>
         </div>
         <div class="detail">
           <div
-              class="detail-title"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >Tel
+            class="detail-title"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            Job
           </div>
           <div
-              class="detail-text"
-              :class="{'light-text': isDarkMode, 'dark-text': !isDarkMode}"
-          >{{reader.tel}}
+            class="detail-text"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            {{ reader.job }}
+          </div>
+        </div>
+        <div class="detail">
+          <div
+            class="detail-title"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            Tel
+          </div>
+          <div
+            class="detail-text"
+            :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+          >
+            {{ reader.tel }}
           </div>
         </div>
       </div>
@@ -78,7 +83,7 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import axios from 'axios';
+import axios from "axios";
 import Reader from "@/models/reader";
 import authHeader from "@/service/auth-header";
 export default {
@@ -93,20 +98,22 @@ export default {
   },
   data() {
     return {
-      reader: new Reader('','','','')
+      reader: new Reader("", "", "", "")
     };
   },
   methods: {
     getUserData() {
-      const API_URL='http://localhost:8082/api/reader/find/'
-      axios.get(API_URL+this.reader.name,{
-        headers:authHeader(),
-      }).then(resp=>{
-        this.reader.name=resp.data.name;
-        this.reader.age=resp.data.age;
-        this.reader.job=resp.data.job;
-        this.reader.tel=resp.data.tel;
-      })
+      const API_URL = "http://localhost:8082/api/reader/find/";
+      axios
+        .get(API_URL + this.reader.name, {
+          headers: authHeader()
+        })
+        .then(resp => {
+          this.reader.name = resp.data.data.name;
+          this.reader.age = resp.data.data.age;
+          this.reader.job = resp.data.data.job;
+          this.reader.tel = resp.data.data.tel;
+        });
     }
   }
 };

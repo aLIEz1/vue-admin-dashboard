@@ -3,74 +3,66 @@
       class="container"
       :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
   >
-    <RequestAccount/>
     <div class="login">
       <img src="@/assets/DCHQ.svg" v-show="isDarkMode"/>
       <img src="@/assets/DCHQ-dark.svg" v-show="!isDarkMode"/>
       <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
-        Recover Account
+        Reset Password
       </h4>
       <form @submit.prevent="onSubmit">
         <input
-            type="email"
-            placeholder="Email"
+            type="text"
+            placeholder="Password"
             :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
-            v-model="user.email"
+            v-model="reset.password"
             required
         />
-        <button>Send Email</button>
+        <input
+            type="text"
+            placeholder="Confirm Password"
+            :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
+            v-model="reset.confirmPassword"
+            required
+        />
+        <button>Reset Password</button>
       </form>
-      <router-link
-          to="/signin"
-          :class="{ 'light-link': isDarkMode, 'dark-link': !isDarkMode }"
-      >
-        Already have an account? Sign in now.
-      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import RequestAccount from "../../components/RequestAccount";
-import User from "@/models/user";
+import ResetPassword from "@/models/resetPassword";
 import axios from "axios";
-
+import getUrlKey from "@/utils/getUrlKey";
 export default {
   components: {
-    RequestAccount
   },
   data() {
     return {
-      user: new User("", "")
+      reset:new ResetPassword('','','')
     };
   },
-  name: "Recover",
+  name: "ResetPassword",
   computed: {
     isDarkMode() {
       return this.$store.getters.isDarkMode;
-    },
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
-  },
-  created() {
-    if (this.loggedIn) {
-      this.$router.push("/");
     }
   },
   methods: {
     onSubmit() {
-      if (this.user.email) {
-        axios.post("http://localhost:8082/api/auth/send",{
-          email:this.user.email
-        }).then(() => {
+      if (this.reset.password===this.reset.confirmPassword) {
+        axios.post("http://localhost:8082/api/auth/reset",{
+          password:this.reset.password,
+          confirmPassword:this.reset.confirmPassword,
+          token:getUrlKey.getUrlKey("token")
+        }).then(response=>{
           this.$router.push({
             name: "signin",
             params: {
-              userResetPassword: true
+              userAlreadyResetPassword: true
             }
           });
-        });
+        })
       }
     }
   },
